@@ -7,7 +7,7 @@ This repository contains the code for a front-end assignment aimed at creating a
 
 
 
-#Demo Live Link: [click here](https://65fc22550168fc009ea1aa0b--playful-lolly-67049e.netlify.app/)
+#Demo Live Link: [click here](https://playful-lolly-67049e.netlify.app/)
 
 ## Tech Stack
 
@@ -53,4 +53,4 @@ Open your browser and visit http://127.0.0.1:5173/ to view the application.
 
 ## Demo
 
-Check out the live demo on [Netlify](https://65fc22550168fc009ea1aa0b--playful-lolly-67049e.netlify.app/).
+Check out the live demo on [Netlify](https://playful-lolly-67049e.netlify.app/).
