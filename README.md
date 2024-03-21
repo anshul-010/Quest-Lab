@@ -18,6 +18,9 @@ This repository contains the code for a front-end assignment aimed at creating a
 - Chakra UI
 - react-beautiful-dnd
 
+## Features
+- Add new Todo
+- Drag and drop from one box to another
 
 ## Getting Started
 
