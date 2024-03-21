@@ -5,63 +5,13 @@ import { Progress } from "./Components/Progress";
 import { Review } from "./Components/Review";
 import { DoneBox } from "./Components/DoneBox";
 import { DragDropContext } from "react-beautiful-dnd";
+import { DoneData, ProgressData, ReviewData, TodoData } from "./db";
 
 const App = () => {
-  // Data for TodoBox
-  const [todoData, setTodoData] = useState([
-    {
-      title: "Project A",
-      color: "pink",
-      id: "11"
-    },
-    {
-      title: "Project B",
-      color: "blue",
-      id: "101"
-    }
-  ]);
-
-  // Data for Progress
-  const [progressData, setProgressData] = useState([
-    {
-      title: "Project C",
-      color: "green",
-      id: "201"
-    },
-    {
-      title: "Project D",
-      color: "yellow",
-      id: "301"
-    }
-  ]);
-
-  // Data for Review
-  const [reviewData, setReviewData] = useState([
-    {
-      title: "Project E",
-      color: "purple",
-      id: "401"
-    },
-    {
-      title: "Project F",
-      color: "orange",
-      id: "501"
-    }
-  ]);
-
-  // Data for DoneBox
-  const [doneData, setDoneData] = useState([
-    {
-      title: "Project G",
-      color: "red",
-      id: "601"
-    },
-    {
-      title: "Project H",
-      color: "teal",
-      id: "701"
-    }
-  ]);
+  const [todoData, setTodoData] = useState(TodoData);
+  const [progressData, setProgressData] = useState(ProgressData);
+  const [reviewData, setReviewData] = useState(ReviewData);
+  const [doneData, setDoneData] = useState(DoneData);
 
   function handleDragEnd(result) {
     const { source, destination } = result;
@@ -124,7 +74,6 @@ const App = () => {
         break;
     }
 
-    // Update state
     setData([...sourceData]);
   }
 
@@ -137,10 +86,13 @@ const App = () => {
         p="30px"
         display="flex"
       >
-        <TodoBox todoData={todoData} />
-        <Progress progressData={progressData} />
-        <Review reviewData={reviewData} />
-        <DoneBox doneData={doneData} />
+        <TodoBox todoData={todoData} setTodoData={setTodoData} />
+        <Progress
+          progressData={progressData}
+          setProgressData={setProgressData}
+        />
+        <Review reviewData={reviewData} setReviewData={setReviewData} />
+        <DoneBox doneData={doneData} setDoneData={setDoneData} />
       </Box>
     </DragDropContext>
   );

@@ -17,6 +17,8 @@ export const TodoCard = ({ data, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          m='10px 0px'
+          _hover={{ transform: 'scale(1.04)', transition: 'transform 0.2s ease' }}
         >
           <Box
             h="8px"

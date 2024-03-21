@@ -7,35 +7,21 @@ import {
   Modal,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import {  Droppable } from "react-beautiful-dnd";
 
-let allTodoData = [
-  {
-    title: "Project A",
-    color: "pink",
-    id:"11"
-  },
-  {
-    title: "Project B",
-    color: "blue",
-    id:"21"
-  },
-];
 
 let initialData = {
   title: "",
   color: "",
 };
 
-export const DoneBox = ({doneData}) => {
+export const DoneBox = ({doneData,setDoneData}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [data, setData] = useState(initialData);
-  const [todoData,setTodoData] = useState(allTodoData)
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -45,22 +31,13 @@ export const DoneBox = ({doneData}) => {
   }
 
   function handleAddTodo() {
-    todoData.push(data);
+    const id = Math.floor(Math.random() * 1000) + 1; 
+    const idString = id.toString(); 
+    const newTodo = { ...data, id: idString };
+    setDoneData([...doneData, newTodo]); 
     onClose();
   }
-
-  function handleDragEnd(result){
-    const {source, destination} = result;
-    if(!destination){return}
-
-    if(destination.droppableId===source.droppableId && destination.index===source.index){return}
-
-    let dropItem = [...todoData]
-    let [selectItem] = dropItem.splice(result.source.index,1)
-    dropItem.splice(result.destination.index,0,selectItem)
-    setTodoData(dropItem)
-  }
-
+  
 
   return (
 
@@ -71,7 +48,7 @@ export const DoneBox = ({doneData}) => {
             ref={provided.innerRef}
             {...provided.droppableProps}
       w="300px"
-      h="550px"
+      // h="550px"
       m="auto"
       backgroundColor="#F1F2F4"
       borderRadius={10}
@@ -98,9 +75,9 @@ export const DoneBox = ({doneData}) => {
         className="add-todo"
         display="flex"
         alignItems="center"
-        padding="5px"
+        padding="5px 10px"
         gap="10px"
-        margin="10px 0"
+        margin="20px 0"
       >
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalContent>

@@ -7,35 +7,20 @@ import {
   Modal,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
-let allTodoData = [
-  {
-    title: "Project A",
-    color: "pink",
-    id:"111"
-  },
-  {
-    title: "Project B",
-    color: "blue",
-    id:"211"
-  },
-];
+import { Droppable } from "react-beautiful-dnd";
 
 let initialData = {
   title: "",
   color: "",
 };
 
-export const Progress = ({progressData}) => {
+export const Progress = ({ progressData, setProgressData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [data, setData] = useState(initialData);
-  // const [todoData,setTodoData] = useState(allTodoData)
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -45,113 +30,100 @@ export const Progress = ({progressData}) => {
   }
 
   function handleAddTodo() {
-    const id = Math.floor(Math.random() * 1000) + 1; // Generate random ID between 1 and 1000
-    const idString = id.toString(); // Convert ID to string
-    const newTodo = { ...data, id: idString };// Create new todo object with generated ID
-    setTodoData([...todoData, newTodo]); // Update todoData state with new todo
+    const id = Math.floor(Math.random() * 1000) + 1;
+    const idString = id.toString();
+    const newTodo = { ...data, id: idString };
+    setProgressData([...progressData, newTodo]);
     onClose();
   }
-  function handleDragEnd(result){
-    const {source, destination} = result;
-    if(!destination){return}
-
-    if(destination.droppableId===source.droppableId && destination.index===source.index){return}
-
-    let dropItem = [...todoData]
-    let [selectItem] = dropItem.splice(result.source.index,1)
-    dropItem.splice(result.destination.index,0,selectItem)
-    setTodoData(dropItem)
-  }
-
-
   return (
-    // <DragDropContext onDragEnd={handleDragEnd}>
-
-    <Droppable droppableId='progress'>
-    {
-        (provided)=>(
-            <Box
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-      w="300px"
-      h="550px"
-      m="auto"
-      backgroundColor="#F1F2F4"
-      borderRadius={10}
-    >
-      <Box
-        className="top"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        padding="10px 20px"
-      >
-        <Text color="#3b3b3b" fontWeight="500">
-          {"Progress"}
-        </Text>
-
-        <Ellipsis color="#3b3b3b" />
-      </Box>
-      <Box className="todo-lists" m="5px 10px 10px 10px">
-        {progressData?.map((ele, i) => (
-          <TodoCard key={ele.id} data={ele} index={i} />
-        ))}
-      </Box>
-      <Box
-        className="add-todo"
-        display="flex"
-        alignItems="center"
-        padding="5px"
-        gap="10px"
-        margin="10px 0"
-      >
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalContent>
-            <ModalHeader>Add New Todo</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Input placeholder="Title" name="title" onChange={handleChange} />
-              <br />
-              <br />
-              <Select name="color" onChange={handleChange}>
-                <option value="">Select the Color</option>
-                <option value="orange">Orange</option>
-                <option value="pink">Pink</option>
-                <option value="green">Green</option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="purple">Purple</option>
-                <option value="yellow">Yellow</option>
-              </Select>
-              <br />
-              <Button
-                colorScheme="twitter"
-                variant="outline"
-                display="block"
-                m="auto"
-                onClick={handleAddTodo}
-              >
-                Add Todo
-              </Button>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-        <Plus color="#737272" size={20} onClick={onOpen} cursor="pointer" />
-        <Text
-          color="#737272"
-          fontWeight="500"
-          onClick={onOpen}
-          cursor="pointer"
+    <Droppable droppableId="progress">
+      {(provided) => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          w="300px"
+          // minH='300px'
+          // maxH="550px"
+          m="auto"
+          backgroundColor="#F1F2F4"
+          borderRadius={10}
+          
         >
-          Add a Card
-        </Text>
-      </Box>
-      {provided.placeholder}
-    </Box>
-        )
-    }
-    </Droppable>
-  // </DragDropContext>
+          <Box
+            className="top"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            padding="10px 20px"
+          >
+            <Text color="#3b3b3b" fontWeight="500">
+              {"Progress"}
+            </Text>
 
+            <Ellipsis color="#3b3b3b" />
+          </Box>
+          <Box className="todo-lists" m="5px 10px 10px 10px">
+            {progressData?.map((ele, i) => (
+              <TodoCard key={ele.id} data={ele} index={i} />
+            ))}
+          </Box>
+          <Box
+            className="add-todo"
+            display="flex"
+            alignItems="center"
+            padding="5px 10px"
+            gap="10px"
+            margin="20px 0"
+          >
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalContent>
+                <ModalHeader>Add New Todo</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Input
+                    placeholder="Title"
+                    name="title"
+                    onChange={handleChange}
+                  />
+                  <br />
+                  <br />
+                  <Select name="color" onChange={handleChange}>
+                    <option value="">Select the Color</option>
+                    <option value="orange">Orange</option>
+                    <option value="pink">Pink</option>
+                    <option value="green">Green</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="yellow">Yellow</option>
+                  </Select>
+                  <br />
+                  <Button
+                    colorScheme="twitter"
+                    variant="outline"
+                    display="block"
+                    m="auto"
+                    onClick={handleAddTodo}
+                  >
+                    Add Todo
+                  </Button>
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+            <Plus color="#737272" size={20} onClick={onOpen} cursor="pointer" />
+            <Text
+              color="#737272"
+              fontWeight="500"
+              onClick={onOpen}
+              cursor="pointer"
+            >
+              Add a Card
+            </Text>
+          </Box>
+          {provided.placeholder}
+        </Box>
+      )}
+    </Droppable>
   );
 };
